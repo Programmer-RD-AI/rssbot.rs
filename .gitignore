@@ -8,3 +8,8 @@ dist
 
 **/mutants.out*/
 
+
+
+# Added by cargo
+
+/target

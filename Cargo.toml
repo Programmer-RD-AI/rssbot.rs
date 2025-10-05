@@ -1,12 +1,8 @@
 [package]
 name = "rss"
 version = "0.1.0"
-edition = "2021"
-authors = ["Programmer-RD-AI <79456372+Programmer-RD-AI@users.noreply.github.com>"]
-
-[lib]
-crate-type = ["cdylib"]
+edition = "2024"
 
 [dependencies]
-worker = { version = "0.6" }
-worker-macros = { version = "0.6" }
+hyper = { version = "1.7.0", features = ["full"] }
+tokio = { version = "1.47.1", features = ["full"] }
