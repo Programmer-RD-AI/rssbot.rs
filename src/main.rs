@@ -1,16 +1,14 @@
 use bytes::Bytes;
 use http_body_util::Full;
+use hyper::body::Incoming;
 use hyper::server::conn::http2;
 use hyper::service::service_fn;
 use hyper::Request;
 use hyper::{rt::Executor, Response};
 use hyper_util::rt::TokioIo;
-use rssbot::utils::get_ip_split;
+use rssbot::utils::get_addr;
 use std::convert::Infallible;
-use std::net::{Ipv4Addr, SocketAddr, SocketAddrV4};
 use tokio::net::TcpListener;
-const DEFAULT_IP: &str = "127.0.0.1";
-const DEFAULT_PORT: u16 = 3000;
 
 #[derive(Clone)]
 pub struct TokioExecutor;
@@ -26,7 +24,7 @@ where
 }
 
 #[cfg(feature = "server")]
-async fn test(_: Request<hyper::body::Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
+async fn test(_: Request<Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
     Ok(Response::new(Full::new(Bytes::from("Hello, World!"))))
 }
 
@@ -35,14 +33,7 @@ async fn test(_: Request<hyper::body::Incoming>) -> Result<Response<Full<Bytes>>
 #[tokio::main]
 async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static)>> {
     dotenv::dotenv().ok();
-    let env_ip = std::env::var("IP_ADDRESS");
-    let ip_str: &str = env_ip.as_deref().unwrap_or(DEFAULT_IP);
-    let port: u16 = std::env::var("PORT")
-        .unwrap()
-        .parse()
-        .unwrap_or(DEFAULT_PORT);
-    let ip: Ipv4Addr = get_ip_split(ip_str);
-    let addr = SocketAddr::from(SocketAddrV4::new(ip, port));
+    let addr = get_addr();
     let listener = TcpListener::bind(addr).await?;
     loop {
         let (stream, _) = listener.accept().await?;
