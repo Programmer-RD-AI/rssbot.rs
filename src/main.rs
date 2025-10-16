@@ -25,12 +25,12 @@ where
     }
 }
 
-// #[cfg(feature = "server")]
+#[cfg(feature = "server")]
 async fn test(_: Request<hyper::body::Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
     Ok(Response::new(Full::new(Bytes::from("Hello, World!"))))
 }
 
-// #[cfg(feature = "server")]
+#[cfg(feature = "server")]
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static)>> {
@@ -57,7 +57,7 @@ async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static
     Ok(())
 }
 
-// #[cfg(not(feature = "server"))]
-// fn main() {
-//     println!("Build without `--features server` — no server started.");
-// }
+#[cfg(not(feature = "server"))]
+fn main() {
+    println!("Build without `--features server` — no server started.");
+}

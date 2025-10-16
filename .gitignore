@@ -1,15 +1,8 @@
 debug
 target
 dist
-
 **/*.rs.bk
-
 *.pdb
-
 **/mutants.out*/
-
-
-
-# Added by cargo
-
 /target
+.env
