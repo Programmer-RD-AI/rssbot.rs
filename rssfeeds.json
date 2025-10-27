@@ -1,0 +1,14 @@
+{
+  "rssfeeds": [
+    "https://news.ycombinator.com/rss",
+    "https://techcrunch.com/feed/",
+    "https://www.theverge.com/rss/index.xml",
+    "https://www.reddit.com/r/MachineLearning/.rss",
+    "https://openai.com/blog/rss/",
+    "https://feeds.feedburner.com/thenextweb",
+    "https://www.wired.com/feed/rss",
+    "https://venturebeat.com/feed/",
+    "https://www.nature.com/subjects/artificial-intelligence/rss.xml",
+    "https://www.analyticsvidhya.com/blog/feed/"
+  ]
+}

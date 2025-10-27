@@ -1,13 +1,9 @@
-use bytes::Bytes;
-use http_body_util::Full;
-use hyper::body::Incoming;
+use hyper::rt::Executor;
 use hyper::server::conn::http2;
 use hyper::service::service_fn;
-use hyper::Request;
-use hyper::{rt::Executor, Response};
 use hyper_util::rt::TokioIo;
+use rssbot::handlers::test::test_handler;
 use rssbot::utils::get_addr;
-use std::convert::Infallible;
 use tokio::net::TcpListener;
 
 #[derive(Clone)]
@@ -24,11 +20,6 @@ where
 }
 
 #[cfg(feature = "server")]
-async fn test(_: Request<Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
-    Ok(Response::new(Full::new(Bytes::from("Hello, World!"))))
-}
-
-#[cfg(feature = "server")]
 #[allow(unreachable_code)]
 #[tokio::main]
 async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static)>> {
@@ -40,7 +31,7 @@ async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static
         let io = TokioIo::new(stream);
         tokio::task::spawn(async move {
             if let Err(_) = http2::Builder::new(TokioExecutor)
-                .serve_connection(io, service_fn(test))
+                .serve_connection(io, service_fn(test_handler))
                 .await
             {}
         });
