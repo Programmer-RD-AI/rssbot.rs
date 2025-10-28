@@ -5,4 +5,3 @@ pub enum APIError {
     #[error("unknown data store error")]
     Unknown,
 }
-

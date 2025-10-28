@@ -3,7 +3,7 @@ use hyper::server::conn::http2;
 use hyper::service::service_fn;
 use hyper_util::rt::TokioIo;
 use rssbot::handlers::test::test_handler;
-use rssbot::utils::get_addr;
+use rssbot::utils::hypr::get_addr;
 use tokio::net::TcpListener;
 
 #[derive(Clone)]
