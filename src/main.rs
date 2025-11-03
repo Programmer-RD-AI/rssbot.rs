@@ -2,7 +2,7 @@ use hyper::rt::Executor;
 use hyper::server::conn::http2;
 use hyper::service::service_fn;
 use hyper_util::rt::TokioIo;
-use rssbot::handlers::test::test_handler;
+use rssbot::handlers::main::main_handler;
 use rssbot::utils::hypr::get_addr;
 use tokio::net::TcpListener;
 
@@ -31,7 +31,7 @@ async fn main() -> Result<(), Box<(dyn std::error::Error + Send + Sync + 'static
         let io = TokioIo::new(stream);
         tokio::task::spawn(async move {
             if let Err(_) = http2::Builder::new(TokioExecutor)
-                .serve_connection(io, service_fn(test_handler))
+                .serve_connection(io, service_fn(main_handler))
                 .await
             {}
         });

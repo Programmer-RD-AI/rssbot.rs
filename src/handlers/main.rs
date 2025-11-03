@@ -6,6 +6,6 @@ use hyper::Response;
 use std::convert::Infallible;
 
 #[cfg(feature = "server")]
-pub async fn test_handler(_: Request<Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
+pub async fn main_handler(_: Request<Incoming>) -> Result<Response<Full<Bytes>>, Infallible> {
     Ok(Response::new(Full::new(Bytes::from("Hello, World!"))))
 }

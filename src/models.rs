@@ -1,4 +1,4 @@
-use std::net::Ipv4Addr;
+use std::{fmt::Display, net::Ipv4Addr};
 
 use serde::Deserialize;
 
@@ -7,6 +7,12 @@ use crate::config::{DEFAULT_IP, DEFAULT_PORT};
 #[derive(Debug, Deserialize)]
 pub struct RSSFeeds {
     pub rssfeeds: Vec<String>,
+}
+
+impl Display for RSSFeeds {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.rssfeeds.iter(rssfeed -> rssfeed).collect())
+    }
 }
 
 pub struct HyperSocketConfig {
